@@ -310,6 +310,8 @@ class Player:
             elif choice == "4":
                 self.history=self.create_history()
                 count = 1
+            else: 
+                print("Por favor escoja una opcion")
                     
     
     def next_song(self, inicio,bucle,count):
