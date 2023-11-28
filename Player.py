@@ -1,6 +1,6 @@
 from Song import Song
 class Player:
-    def __init__(self,songs,playlist,history):
+    def __init__(self):
         self.songs = []
         self.playlist = []
         self.history = []
