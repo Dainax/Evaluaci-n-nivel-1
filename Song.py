@@ -17,5 +17,7 @@ class Song:
     Año: {self.year}
     Idioma: {self.language}
     """
+    def show2(self):
+        return f"""Número: {self.num},Nombre: {self.name},Artista: {self.artist},Reproducciones: {self.views},Año: {self.year},Idioma: {self.language}"""
     def songName(self):
         return self.name
