@@ -8,7 +8,7 @@ class Player:
     def create_history(self):
         self.history = []
         for cancion in self.playlist:
-            self.history.append({cancion:cancion.history})
+            self.history.append({cancion.show2():cancion.history})
         return self.history    
             
     def get_txt(self):
@@ -55,6 +55,11 @@ class Player:
         print("----------------------------")
         for i in range(len(self.playlist)):
             print(f"{i+1}. {self.playlist[i].show()}")
+            print("----------------------------")   
+    def shows_history(self):
+        print("----------------------------")
+        for i in range(len(self.history)):
+            print(f"{i+1}. {self.history[i].show()}")
             print("----------------------------")   
                        
     def pause(self):
@@ -108,6 +113,7 @@ class Player:
                 self.pause()      
             elif choice == "4":
                 self.reproductor()
+                self.history=self.create_history()
             elif choice == "5":
                 self.order()
                 self.pause()  
@@ -115,12 +121,13 @@ class Player:
                 self.shows()
                 self.pause()  
             elif choice == "7":
+                print(self.history)
                 self.pause()  
             elif choice == "8":
                 print("Gracias por preferirnos")
                 break
             else:
-                print("Error, seleccione un número válido")
+                print("Error, seleccione una opción válido")
                 self.pause()   
     def order(self):
         choice = input(f"""
@@ -212,12 +219,20 @@ class Player:
                       {cancion.show()}
                 ---------------------------------      
                       """) 
-                   
-    def historial(self):
-        pass           
+        elif choice == "7":
+            pass
+        else:
+            print("No se seleccionó una opción válida")
+                          
     def search_song(self):    
         
         choice = input("Ingrese el nombre de la canción a buscar: ")
+        choice=choice.lower()
+        choice=choice.title()
+        while any(chr.isdigit() for chr in choice):
+                choice = input("Error! Ingrese el nombre de la canción (Recuerde que no puede tener números): ")
+                choice=choice.lower()
+                choice=choice.title()         
         count = 0
         for nombre in self.playlist:
             if nombre.name == choice:
@@ -294,7 +309,6 @@ class Player:
         4-Salir              
         Ingrese el número de la opción que desee: """)
             if choice == "1":
-                print("@")
                 inicio, count=self.next_song(inicio,bucle,count) 
             elif choice == "2":
                 if bucle == 0:
@@ -304,11 +318,11 @@ class Player:
                     print("Ya hay un bucle activo")
             elif choice == "3":
                 if bucle == 1:
-                    bucle == 0
+                    bucle = bucle - 1
+                    print("Se ha desactivado el bucle")
                 else:
                     print("No hay bucles activos")
             elif choice == "4":
-                self.history=self.create_history()
                 count = 1
             else: 
                 print("Por favor escoja una opcion")
@@ -316,7 +330,7 @@ class Player:
     
     def next_song(self, inicio,bucle,count):
         inicio = inicio + 1
-        if inicio >= len(self.playlist) and bucle == 0:
+        if inicio >= len(self.playlist) and bucle != 1:
             count = 1
             print("Se han reproducido todas las canciones, volviendo al menú...")
         if inicio >= len(self.playlist) and bucle == 1:
@@ -332,9 +346,3 @@ class Player:
             --------------------------"""
             )
         return inicio, count
-       
-                
-        
-
-            
-            
