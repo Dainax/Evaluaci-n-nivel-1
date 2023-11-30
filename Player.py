@@ -304,25 +304,28 @@ class Player:
             choice = input(f"""
                        
         1-Siguiente Canción
-        2-Reproducir en bucle
-        3-Eliminar bucle
-        4-Salir              
+        2-Canción anterior
+        3-Reproducir en bucle
+        4-Eliminar bucle
+        5-Salir              
         Ingrese el número de la opción que desee: """)
             if choice == "1":
                 inicio, count=self.next_song(inicio,bucle,count) 
             elif choice == "2":
+                inicio=self.previous_song(inicio) 
+            elif choice == "3":
                 if bucle == 0:
                     bucle = 1
                     print("Se ha iniciado un bucle")
                 else:
                     print("Ya hay un bucle activo")
-            elif choice == "3":
+            elif choice == "4":
                 if bucle == 1:
                     bucle = bucle - 1
                     print("Se ha desactivado el bucle")
                 else:
                     print("No hay bucles activos")
-            elif choice == "4":
+            elif choice == "5":
                 count = 1
             else: 
                 print("Por favor escoja una opcion")
@@ -346,3 +349,18 @@ class Player:
             --------------------------"""
             )
         return inicio, count
+    
+    def previous_song(self, inicio):
+        if inicio == 0:
+            print("Esta es la canción inicial") 
+        else:
+            inicio = inicio - 1
+            self.playlist[inicio].history += 1
+            print(f"""
+                --------Reproduciendo-----
+                
+                {self.playlist[inicio].show()}
+                
+                --------------------------"""
+                )
+        return inicio
